@@ -1,44 +1,35 @@
 # 💬 Real-Time Chat App
 
-A simple and lightweight real-time chat application built with **Node.js**, **Express**, and **Socket.io**.  
-This web app allows multiple users to chat together in real time and is deployed on **Railway**.
-
----
+A simple and lightweight real-time chat application built with Node.js, Express, and Socket.io.  
+This web app allows multiple users to chat together in real time and is deployed on Railway.
 
 ## ✨ Features
-- ✅ Real-time messaging across multiple devices
-- ✅ Lightweight and easy to set up
-- ✅ Displays joined and left messages
-- ✅ User-friendly interface
-- ✅ Scalable and easy to enhance with new features
-
----
+✅ Real-time messaging across multiple devices  
+✅ Lightweight and easy to set up  
+✅ Displays joined and left messages  
+✅ User-friendly interface  
+✅ Scalable and easy to enhance with new features  
 
 ## 🧰 Technologies Used
-- **Node.js** – Backend runtime
-- **Express** – Web server
-- **Socket.io** – Real-time communication
-- **Railway** – Hosting & deployment
-- **HTML/CSS/JS** – Frontend
+- Node.js – Backend runtime
+- Express – Web server
+- Socket.io – Real-time communication
+- Railway – Hosting & deployment
+- HTML/CSS/JS – Frontend
 
----
-
-## 🚀 Live Demo
+## 🚀 Live Demo  
 Access the live app here:  
-🔗 [https://your-project-name.up.railway.app](https://your-project-name.up.railway.app)
-
----
+🔗 https://chat-app-production-f961.up.railway.app
 
 ## 📂 Getting Started (Local)
-You can also run the app on your machine:
 
-### Prerequisites
-- [Node.js](https://nodejs.org) installed
+**Prerequisites:**  
+- Node.js installed
 
-### Steps
+**Steps:**
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/chat-app.git
+git clone https://github.com/HassanEhsani/chat-app.git
 
 # Navigate into the directory
 cd chat-app
