@@ -1,126 +1,149 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Simple Chat App</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 1rem; }
-    #chat { display: none; }
-    #messages { list-style: none; padding: 0; }
-    #messages li { padding: 0.5rem; border-bottom: 1px solid #eee; }
-    .username { font-weight: bold; color: #007bff; }
-  </style>
-  <style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-    padding: 1rem;
-  }
+  <head>
+    <title>Simple Chat App</title>
+    <link rel="stylesheet" href="/styles.css" />
 
-  #messages {
-    list-style: none;
-    padding: 0;
-    max-width: 500px;
-    margin: 0 auto;
-  }
+    <title>Simple Chat App</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 1rem;
+      }
+      #chat {
+        display: none;
+      }
+      #messages {
+        list-style: none;
+        padding: 0;
+      }
+      #messages li {
+        padding: 0.5rem;
+        border-bottom: 1px solid #eee;
+      }
+      .username {
+        font-weight: bold;
+        color: #007bff;
+      }
+    </style>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        padding: 1rem;
+      }
 
-  #messages li {
-    padding: 0.5rem 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 8px;
-    word-wrap: break-word;
-  }
+      #messages {
+        list-style: none;
+        padding: 0;
+        max-width: 500px;
+        margin: 0 auto;
+      }
 
-  /* پیام کاربر */
-  #messages li.user-message {
-    background: #e0f7fa;
-    align-self: flex-start;
-  }
+      #messages li {
+        padding: 0.5rem 1rem;
+        margin-bottom: 0.5rem;
+        border-radius: 8px;
+        word-wrap: break-word;
+      }
 
-  /* پیام سیستم */
-  #messages li.system-message {
-    background: #ffe0b2;
-    color: #e65100;
-    font-style: italic;
-    text-align: center;
-  }
+      /* پیام کاربر */
+      #messages li.user-message {
+        background: #e0f7fa;
+        align-self: flex-start;
+      }
 
-  #form {
-    display: flex;
-    max-width: 500px;
-    margin: 1rem auto 0;
-  }
+      /* پیام سیستم */
+      #messages li.system-message {
+        background: #ffe0b2;
+        color: #e65100;
+        font-style: italic;
+        text-align: center;
+      }
 
-  #input {
-    flex: 1;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 8px 0 0 8px;
-    font-size: 1rem;
-  }
+      #form {
+        display: flex;
+        max-width: 500px;
+        margin: 1rem auto 0;
+      }
 
-  button {
-    padding: 0 1rem;
-    border: none;
-    background: #00796b;
-    color: white;
-    border-radius: 0 8px 8px 0;
-    cursor: pointer;
-  }
+      #input {
+        flex: 1;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 8px 0 0 8px;
+        font-size: 1rem;
+      }
 
-  button:hover {
-    background: #004d40;
-  }
-</style>
+      button {
+        padding: 0 1rem;
+        border: none;
+        background: #00796b;
+        color: white;
+        border-radius: 0 8px 8px 0;
+        cursor: pointer;
+      }
 
-</head>
-<body>
-  <form id="username-form">
-    <h2>Enter your name:</h2>
-    <input id="username" placeholder="Your name" />
-    <button>Join Chat</button>
-  </form>
-
-  <div id="chat">
-    <ul id="messages"></ul>
-    <form id="form">
-      <input id="input" autocomplete="off" placeholder="Your message" />
-      <button>Send</button>
+      button:hover {
+        background: #004d40;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="username-form">
+      <h2>Enter your name:</h2>
+      <input id="username" placeholder="Your name" />
+      <button>Join Chat</button>
     </form>
-  </div>
 
-<script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
+    <div id="chat">
+      <ul id="messages"></ul>
+      <form id="form">
+        <input id="input" autocomplete="off" placeholder="Your message" />
+        <button>Send</button>
+      </form>
+    </div>
 
-    const usernameForm = document.getElementById('username-form');
-    const usernameInput = document.getElementById('username');
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- ✅ فقط این‌ها داخل HTML بمونه -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      const usernameForm = document.getElementById("username-form");
+      const usernameInput = document.getElementById("username");
+      const form = document.getElementById("form");
+      const input = document.getElementById("input");
+      const messages = document.getElementById("messages");
 
-    usernameForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (usernameInput.value.trim()) {
-        socket.emit('set username', usernameInput.value.trim());
-        usernameForm.style.display = 'none';
-        document.getElementById('chat').style.display = 'block';
-      }
-    });
+      usernameForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (usernameInput.value.trim()) {
+          const username = usernameInput.value.trim();
+          window.currentUsername = username;
+          socket.emit("set username", username);
+          usernameForm.style.display = "none";
+          document.getElementById("chat").style.display = "block";
+        }
+      });
 
-    const form = document.getElementById('form');
-    const input = document.getElementById('input');
-    const messages = document.getElementById('messages');
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (input.value) {
+          socket.emit("chat message", {
+            username: window.currentUsername,
+            message: input.value,
+          });
+          input.value = "";
+        }
+      });
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (input.value.trim()) {
-        socket.emit('chat message', input.value.trim());
-        input.value = '';
-      }
-    });
-
-    socket.on('chat message', (data) => {
-      const li = document.createElement('li');
-      li.innerHTML = `<span class="username">${data.username}:</span> ${data.message}`;
-      messages.appendChild(li);
-    });
-  </script>
-</body>
+      socket.on("chat message", (data) => {
+        const li = document.createElement("li");
+        li.className =
+          data.username === "⚡ SYSTEM" ? "system-message" : "user-message";
+        li.innerHTML = `<span class="username">${data.username}:</span> ${data.message}`;
+        messages.appendChild(li);
+      });
+    </script>
+  </body>
 </html>
